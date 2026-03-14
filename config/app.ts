@@ -27,7 +27,7 @@ import type { AssetsManagerConfig } from '@ioc:Adonis/Core/AssetsManager'
 | be decrypted.
 |
 */
-export const appKey: string = Env.get('APP_KEY')
+export const appKey: string = Env.get('APP_KEY', 'gatewayapi-default-app-key-change-me')
 
 /*
 |--------------------------------------------------------------------------
@@ -131,7 +131,7 @@ export const logger: LoggerConfig = {
   | reading the `name` property from the `package.json` file.
   |
   */
-  name: Env.get('APP_NAME'),
+  name: Env.get('APP_NAME', 'gatewayapi'),
 
   /*
   |--------------------------------------------------------------------------
@@ -236,7 +236,7 @@ export const assets: AssetsManagerConfig = {
   | in the future
   |
   */
-  driver: Env.get('ASSETS_DRIVER'),
+  driver: Env.get('ASSETS_DRIVER', 'encore'),
 
   /*
   |--------------------------------------------------------------------------

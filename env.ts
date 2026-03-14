@@ -1,26 +1,26 @@
-/*
-|--------------------------------------------------------------------------
-| Validating Environment Variables
-|--------------------------------------------------------------------------
-|
-| In this file we define the rules for validating environment variables.
-| By performing validation we ensure that your application is running in
-| a stable environment with correct configuration values.
-|
-| This file is read automatically by the framework during the boot lifecycle
-| and hence do not rename or move this file to a different location.
-|
-*/
-
 import Env from '@ioc:Adonis/Core/Env'
 
 export default Env.rules({
-	HOST: Env.schema.string({ format: 'host' }),
-	PORT: Env.schema.number(),
-	APP_KEY: Env.schema.string(),
-	APP_NAME: Env.schema.string(),
-	CACHE_VIEWS: Env.schema.boolean(),
-	SESSION_DRIVER: Env.schema.string(),
-  DRIVE_DISK: Env.schema.enum(['local'] as const),
-	NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
+	HOST: Env.schema.string.optional({ format: 'host' }),
+	PORT: Env.schema.number.optional(),
+	APP_KEY: Env.schema.string.optional(),
+	APP_NAME: Env.schema.string.optional(),
+	CACHE_VIEWS: Env.schema.boolean.optional(),
+	SESSION_DRIVER: Env.schema.string.optional(),
+  DRIVE_DISK: Env.schema.enum.optional(['local'] as const),
+  DB_CONNECTION: Env.schema.string.optional(),
+  MYSQL_HOST: Env.schema.string.optional({ format: 'host' }),
+  MYSQL_PORT: Env.schema.number.optional(),
+  MYSQL_USER: Env.schema.string.optional(),
+  MYSQL_PASSWORD: Env.schema.string.optional(),
+  MYSQL_DB_NAME: Env.schema.string.optional(),
+  JWT_SECRET: Env.schema.string.optional(),
+  JWT_EXPIRES_IN_SECONDS: Env.schema.number.optional(),
+  GATEWAY_1_BASE_URL: Env.schema.string.optional(),
+  GATEWAY_2_BASE_URL: Env.schema.string.optional(),
+  GATEWAY_1_LOGIN_EMAIL: Env.schema.string.optional(),
+  GATEWAY_1_LOGIN_TOKEN: Env.schema.string.optional(),
+  GATEWAY_2_AUTH_TOKEN: Env.schema.string.optional(),
+  GATEWAY_2_AUTH_SECRET: Env.schema.string.optional(),
+	NODE_ENV: Env.schema.enum.optional(['development', 'production', 'test'] as const),
 })
