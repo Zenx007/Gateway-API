@@ -1,0 +1,78 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gatewayapi_app
+    depends_on:
+      mysql:
+        condition: service_healthy
+      gateways-mock:
+        condition: service_started
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3333
+      NODE_ENV: development
+      APP_KEY: gatewayapi-default-app-key-change-me
+      APP_NAME: gatewayapi
+      CACHE_VIEWS: false
+      SESSION_DRIVER: cookie
+      DRIVE_DISK: local
+      DB_CONNECTION: mysql
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: gateway
+      MYSQL_PASSWORD: gateway
+      MYSQL_DB_NAME: gatewayapi
+      JWT_SECRET: gatewayapi-jwt-default-secret-change-me
+      JWT_EXPIRES_IN_SECONDS: 604800
+      GATEWAY_1_BASE_URL: http://gateways-mock:3001
+      GATEWAY_2_BASE_URL: http://gateways-mock:3002
+      GATEWAY_1_LOGIN_EMAIL: dev@betalent.tech
+      GATEWAY_1_LOGIN_TOKEN: FEC9BB078BF338F464F96B48089EB498
+      GATEWAY_2_AUTH_TOKEN: tk_f2198cc671b5289fa856
+      GATEWAY_2_AUTH_SECRET: 3d15e8ed6131446ea7e3456728b1211f
+    ports:
+      - '3333:3333'
+    command: >
+      sh -c "node ace migration:run &&
+             node ace db:seed &&
+             echo '' &&
+             echo '============================================' &&
+             echo 'GatewayAPI iniciada com sucesso' &&
+             echo 'API:     http://localhost:3333' &&
+             echo 'Swagger: http://localhost:3333/docs' &&
+             echo '============================================' &&
+             echo '' &&
+             node ace serve --watch"
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.4
+    container_name: gatewayapi_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gatewayapi
+      MYSQL_USER: gateway
+      MYSQL_PASSWORD: gateway
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  gateways-mock:
+    image: matheusprotzen/gateways-mock
+    container_name: gatewayapi_gateways_mock
+    ports:
+      - '3001:3001'
+      - '3002:3002'
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
