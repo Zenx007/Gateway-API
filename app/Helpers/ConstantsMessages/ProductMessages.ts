@@ -1,0 +1,18 @@
+export const PRODUCT_MESSAGES = {
+  INDEX_SUCCESS: 'Produtos listados com sucesso',
+  INDEX_ERROR: 'Falha ao listar produtos',
+  SHOW_SUCCESS: 'Produto encontrado com sucesso',
+  SHOW_ERROR: 'Falha ao buscar produto',
+  STORE_SUCCESS: 'Produto criado com sucesso',
+  STORE_ERROR: 'Falha ao criar produto',
+  UPDATE_SUCCESS: 'Produto atualizado com sucesso',
+  UPDATE_ERROR: 'Falha ao atualizar produto',
+  DESTROY_SUCCESS: 'Produto removido com sucesso',
+  DESTROY_ERROR: 'Falha ao remover produto',
+  NOT_FOUND: 'Produto não encontrado',
+  INVALID_ID: 'ID de produto inválido',
+  INVALID_AMOUNT: 'Valor do produto deve ser maior que zero',
+  INVALID_QUANTITY: 'Quantidade deve ser maior que zero',
+  INACTIVE_PRODUCT: 'Produto inativo não pode ser comprado',
+  PRODUCT_HAS_TRANSACTIONS: 'Produto possui vendas vinculadas e não pode ser removido',
+} as const
